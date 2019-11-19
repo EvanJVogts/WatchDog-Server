@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS movies;
+DROP TYPE IF EXISTS star_rating;
