@@ -1,5 +1,7 @@
 const MoviesService = {
   getAllMovies(knex) {
+    console.log('knex', knex);
+    console.log(knex);
     return knex.select('*').from('movies');
   },
   getById(knex, id) {

@@ -19,6 +19,7 @@ moviesRouter
   .route('/')
 
   .get((req, res, next) => {
+    console.log('getAllMovies');
     MoviesService.getAllMovies(req.app.get('db'))
       .then(movies => {
         res.json(movies.map(serializeMovie));
@@ -62,6 +63,7 @@ moviesRouter
   .route('/:movie_id')
 
   .all((req, res, next) => {
+    console.log('why are we here?!?!?')
     const { movie_id } = req.params;
     MoviesService.getById(req.app.get('db'), movie_id)
       .then(movie => {
