@@ -1,1 +1,4 @@
-TRUNCATE movies;
+TRUNCATE 
+  movies,
+  users
+  RESTART IDENTITY CASCADE;

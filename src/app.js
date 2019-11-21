@@ -4,9 +4,12 @@ const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
-const validateBearerToken = require('./validate-bearer-token');
+// const validateBearerToken = require('./validate-bearer-token');
 const errorHandler = require('./error-handler');
 const moviesRouter = require('./movies/movies-router');
+const authRouter = require('./auth/auth-router');
+const usersRouter = require('./users/users-router');
+
 const app = express();
 
 app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
@@ -14,13 +17,11 @@ app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
 }));
 app.use(cors());
 app.use(helmet());
-app.use(validateBearerToken);
 
 app.use('/api/movies', moviesRouter);
-
-app.get('/', (req, res) => {
-  res.send('Hello, world!');
-});
+app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
+// app.use(validateBearerToken);
 
 app.use(errorHandler);
 

@@ -4,6 +4,7 @@ const xss = require('xss');
 const logger = require('../logger');
 const MoviesService = require('./movies-service');
 const { getMovieValidationError } = require('./movies-validator');
+const { requireAuth } = require('../middleware/jwt-auth')
 
 const moviesRouter = express.Router();
 const bodyParser = express.json();
@@ -61,7 +62,7 @@ moviesRouter
 
 moviesRouter
   .route('/:movie_id')
-
+  .all(requireAuth)
   .all((req, res, next) => {
     const { movie_id } = req.params;
     MoviesService.getById(req.app.get('db'), movie_id)
