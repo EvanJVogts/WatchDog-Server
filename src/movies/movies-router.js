@@ -4,7 +4,7 @@ const xss = require('xss');
 const logger = require('../logger');
 const MoviesService = require('./movies-service');
 const { getMovieValidationError } = require('./movies-validator');
-const { requireAuth } = require('../middleware/jwt-auth')
+const { requireAuth } = require('../middleware/jwt-auth');
 
 const moviesRouter = express.Router();
 const bodyParser = express.json();
