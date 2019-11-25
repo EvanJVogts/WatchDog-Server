@@ -89,13 +89,13 @@ moviesRouter
   })
 
   .delete((req, res, next) => {
-    const { Movie_id } = req.params;
+    const { movie_id } = req.params;
     MoviesService.deleteMovie(
       req.app.get('db'),
-      Movie_id
+      movie_id
     )
       .then(numRowsAffected => {
-        logger.info(`Movie with id ${Movie_id} deleted.`);
+        logger.info(`Movie with id ${movie_id} deleted.`);
         res.status(204).end();
       })
       .catch(next);
