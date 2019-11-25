@@ -82,7 +82,10 @@ moviesRouter
   })
 
   .get((req, res) => {
-    res.json(serializeMovie(res.movie));
+    console.log(res.movie);
+    return (
+      res.json(serializeMovie(res.movie))
+    );
   })
 
   .delete((req, res, next) => {

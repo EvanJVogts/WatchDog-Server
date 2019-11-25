@@ -1,4 +1,3 @@
-const { isWebUri } = require('valid-url');
 const logger = require('../logger');
 
 const NO_ERRORS = null;
