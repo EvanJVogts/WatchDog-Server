@@ -3,7 +3,7 @@ const express = require('express');
 const xss = require('xss');
 const logger = require('../logger');
 const MoviesService = require('./movies-service');
-const { getMovieValidationError } = require('./movies-validator');
+// const { getMovieValidationError } = require('./movies-validator');
 const { requireAuth } = require('../middleware/jwt-auth');
 
 const moviesRouter = express.Router();
@@ -41,9 +41,9 @@ moviesRouter
       }
     }
 
-    const error = getMovieValidationError(newMovie);
+    // const error = getMovieValidationError(newMovie);
 
-    if (error) return res.status(400).send(error);
+    // if (error) return res.status(400).send(error);
 
     MoviesService.insertMovie(
       req.app.get('db'),
@@ -115,9 +115,9 @@ moviesRouter
       });
     }
 
-    const error = getMovieValidationError(movieToUpdate);
+    // const error = getMovieValidationError(movieToUpdate);
 
-    if (error) return res.status(400).send(error);
+    // if (error) return res.status(400).send(error);
 
     MoviesService.updateMovie(
       req.app.get('db'),
