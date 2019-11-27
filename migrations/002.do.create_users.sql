@@ -5,3 +5,8 @@ CREATE TABLE users (
   email TEXT NOT NULL UNIQUE,
   password TEXT NOT NULL
 );
+
+ALTER TABLE movies
+  ADD COLUMN
+    user_id INTEGER REFERENCES users(id)
+     ON DELETE SET NULL;
