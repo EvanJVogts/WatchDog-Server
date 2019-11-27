@@ -1,0 +1,3 @@
+ALTER TABLE movies DROP COLUMN IF EXISTS style;
+
+DROP TYPE IF EXISTS user_id;
