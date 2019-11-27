@@ -17,11 +17,11 @@ const serializeMovie = movie => ({
 });
 
 moviesRouter
+  .use(requireAuth)
   .route('/')
-
   .get((req, res, next) => {
     // console.log('getAllMovies');
-    MoviesService.getAllMovies(req.app.get('db'))
+    MoviesService.getAllMovies(req.app.get('db'),req.user.id)
       .then(movies => {
         res.json(movies.map(serializeMovie));
       })
@@ -30,8 +30,8 @@ moviesRouter
 
   .post(bodyParser, (req, res, next) => {
     const { title, comments, rating } = req.body;
-    const newMovie = { title, comments, rating };
-
+    const newMovie = { title, comments, rating, user_id:req.user.id };
+    console.log(req.user);
     for (const field of ['title', 'comments', 'rating']) {
       if (!newMovie[field]) {
         logger.error(`${field} is required`);
@@ -110,7 +110,7 @@ moviesRouter
       logger.error('Invalid update without required fields');
       return res.status(400).json({
         error: {
-          message: 'Request body must content either \'title\', \'comments\' or \'rating\''
+          message: 'Request body must contain \'title\', \'comments\' or \'rating\''
         }
       });
     }

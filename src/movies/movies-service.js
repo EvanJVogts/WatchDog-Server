@@ -1,6 +1,6 @@
 const MoviesService = {
-  getAllMovies(knex) {
-    return knex.select('*').from('movies');
+  getAllMovies(knex, user_id) {
+    return knex.select('*').from('movies').where('user_id', user_id);
   },
   getById(knex, id) {
     return knex.from('movies').select('*').where('id', id).first();
