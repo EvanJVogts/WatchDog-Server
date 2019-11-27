@@ -20,7 +20,6 @@ moviesRouter
   .use(requireAuth)
   .route('/')
   .get((req, res, next) => {
-    // console.log('getAllMovies');
     MoviesService.getAllMovies(req.app.get('db'),req.user.id)
       .then(movies => {
         res.json(movies.map(serializeMovie));
@@ -31,7 +30,6 @@ moviesRouter
   .post(bodyParser, (req, res, next) => {
     const { title, comments, rating } = req.body;
     const newMovie = { title, comments, rating, user_id:req.user.id };
-    console.log(req.user);
     for (const field of ['title', 'comments', 'rating']) {
       if (!newMovie[field]) {
         logger.error(`${field} is required`);
@@ -65,7 +63,7 @@ moviesRouter
   .all(requireAuth)
   .all((req, res, next) => {
     const { movie_id } = req.params;
-    MoviesService.getById(req.app.get('db'), movie_id)
+    MoviesService.getById(req.app.get('db'), movie_id, req.user.id)
       .then(movie => {
         if (!movie) {
           logger.error(`Movie with id ${movie_id} not found.`);
