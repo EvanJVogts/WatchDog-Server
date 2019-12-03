@@ -9,7 +9,10 @@ CREATE TYPE movie_platform AS ENUM (
   'Sling TV',
   'YouTube',
   'Cable Provider',
-  'Playstation Vue'
+  'Playstation Vue',
+  'Apple TV',
+  'CBS All Access',
+  'Other'
 );
 
 ALTER TABLE movies
