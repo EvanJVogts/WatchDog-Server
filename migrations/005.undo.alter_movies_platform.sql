@@ -1,0 +1,3 @@
+ALTER TABLE movies DROP COLUMN IF EXISTS platform;
+
+DROP TYPE IF EXISTS movie_platform;

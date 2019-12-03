@@ -1,0 +1,3 @@
+ALTER TABLE movies DROP COLUMN IF EXISTS favorite;
+
+DROP TYPE IF EXISTS favorite_movie;
