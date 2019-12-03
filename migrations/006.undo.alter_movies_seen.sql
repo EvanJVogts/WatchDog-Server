@@ -1,0 +1,3 @@
+ALTER TABLE movies DROP COLUMN IF EXISTS seen;
+
+DROP TYPE IF EXISTS seen_movie;
