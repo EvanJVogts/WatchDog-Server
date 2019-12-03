@@ -14,6 +14,9 @@ const serializeMovie = movie => ({
   title: xss(movie.title),
   comments: xss(movie.comments),
   rating: Number(movie.rating),
+  platform: xss(movie.platform),
+  favorite: Boolean(movie.favorite),
+  seen: Boolean(movie.seen),
 });
 
 moviesRouter
@@ -28,9 +31,9 @@ moviesRouter
   })
 
   .post(bodyParser, (req, res, next) => {
-    const { title, comments, rating } = req.body;
-    const newMovie = { title, comments, rating, user_id:req.user.id };
-    for (const field of ['title', 'comments', 'rating']) {
+    const { title, comments, rating, platform, favorite, seen } = req.body;
+    const newMovie = { title, comments, rating, platform, favorite, seen, user_id:req.user.id };
+    for (const field of ['title', 'comments', 'rating', 'platform']) {
       if (!newMovie[field]) {
         logger.error(`${field} is required`);
         return res.status(400).send({
@@ -100,15 +103,15 @@ moviesRouter
   })
 
   .patch(bodyParser, (req, res, next) => {
-    const { title, comments, rating } = req.body;
-    const movieToUpdate = { title, comments, rating };
+    const { title, comments, rating, platform, favorite, seen } = req.body;
+    const movieToUpdate = { title, comments, rating, platform, favorite, seen };
 
     const numberOfValues = Object.values(movieToUpdate).filter(Boolean).length;
     if (numberOfValues === 0) {
       logger.error('Invalid update without required fields');
       return res.status(400).json({
         error: {
-          message: 'Request body must contain \'title\', \'comments\' or \'rating\''
+          message: 'Request body must contain \'title\', \'comments\', \'platform\', \'favorite\', \'seen\' or \'rating\''
         }
       });
     }
