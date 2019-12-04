@@ -3,7 +3,6 @@ const express = require('express');
 const xss = require('xss');
 const logger = require('../logger');
 const MoviesService = require('./movies-service');
-// const { getMovieValidationError } = require('./movies-validator');
 const { requireAuth } = require('../middleware/jwt-auth');
 
 const moviesRouter = express.Router();
@@ -29,7 +28,6 @@ moviesRouter
       })
       .catch(next);
   })
-
   .post(bodyParser, (req, res, next) => {
     const { title, comments, rating, platform, favorite, seen } = req.body;
     const newMovie = { title, comments, rating, platform, favorite, seen, user_id:req.user.id };
@@ -41,11 +39,6 @@ moviesRouter
         });
       }
     }
-
-    // const error = getMovieValidationError(newMovie);
-
-    // if (error) return res.status(400).send(error);
-
     MoviesService.insertMovie(
       req.app.get('db'),
       newMovie
@@ -59,8 +52,16 @@ moviesRouter
       })
       .catch(next);
   });
-
-
+moviesRouter
+  .use(requireAuth)
+  .route('/favorites')
+  .get((req, res, next) => {
+    MoviesService.getFavoriteMovies(req.app.get('db'),req.user.id)
+      .then(movies => {
+        res.json(movies.map(serializeMovie));
+      })
+      .catch(next);
+  });
 moviesRouter
   .route('/:movie_id')
   .all(requireAuth)
@@ -115,11 +116,6 @@ moviesRouter
         }
       });
     }
-
-    // const error = getMovieValidationError(movieToUpdate);
-
-    // if (error) return res.status(400).send(error);
-
     MoviesService.updateMovie(
       req.app.get('db'),
       req.params.movie_id,
